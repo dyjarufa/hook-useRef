@@ -1,5 +1,6 @@
 import React, { FormEvent, useCallback, useEffect, useRef } from "react";
 import Input from "./components/Input";
+import Modal, { ModalHandles } from "./components/Modal";
 
 function App() {
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -7,6 +8,7 @@ function App() {
   // record a component information without rendering it
   const dataRegister = useRef({ value: false }) // is not required to create a interface, typescript understand the type already
 
+  const mondalRef = useRef<ModalHandles>(null)
   // useEffect(() => {
   //   nameInputRef.current?.focus();
   // }, [])
@@ -21,6 +23,10 @@ function App() {
   const handleDataRegister = useCallback(() => {
     dataRegister.current.value = !dataRegister.current.value;
   }, [])
+
+  const handleOpenModal = useCallback(() => {
+    mondalRef.current?.openModal();
+  },[])
 
   return (
     <div className="App">
@@ -41,6 +47,10 @@ function App() {
 
         <button type="submit">Send</button> {/* imperative form */}
       </form>
+
+      <button onClick={handleOpenModal}>Open Modal</button>
+
+      <Modal ref={mondalRef}/>
     </div>
   );
 }
